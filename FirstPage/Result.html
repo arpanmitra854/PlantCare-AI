@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Result | PlantCare AI</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+  <link rel="stylesheet" href="result.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Prediction Result</h2>
+    <img src="plant.jpg" alt="Uploaded Plant" class="result-img" id="plantImage">
+    <p class="prediction" id="diseaseResult">Disease: <strong>Loading...</strong></p>
+    <p class="confidence" id="confidenceScore">Confidence: <strong>Loading...</strong></p>
+    <button class="btn" onclick="goBack()"><i class="fi fi-rs-rotate-reverse"></i>&nbsp; Try Another</button>
+  </div>
+  <script>
+    window.onload = () => {
+    const rawData = sessionStorage.getItem("plantPrediction");
+
+    if (!rawData) {
+        document.getElementById("diseaseResult").innerHTML = "No result data found.";
+        return;
+    }
+
+    try {
+        const result = JSON.parse(rawData);
+        const disease = result.Class || "Unknown Disease";
+        const confidence = result.Confidence ? (result.Confidence * 100).toFixed(2) : "N/A";
+        const imageUrl = result.image_url;
+
+        document.getElementById("diseaseResult").innerHTML = `Disease: <strong>${disease}</strong>`;
+        document.getElementById("confidenceScore").innerHTML = `Confidence: <strong>${confidence}%</strong>`;
+        if (imageUrl) document.getElementById("plantImage").src = imageUrl;
+
+    } catch (err) {
+        console.error("Failed to parse result:", err);
+        document.getElementById("diseaseResult").innerHTML = "Error displaying result.";
+    }
+};
+
+function goBack() {
+    window.location.href = "indexAfter.html";
+}
+
+  </script>
+</body>
+</html>

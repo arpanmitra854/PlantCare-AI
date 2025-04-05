@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-straight/css/uicons-bold-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="styleMyPlants.css">
+    <title>My Plants | PlantCare AI</title>
+</head>
+<body>
+    <header>
+        <div class="container-H">
+            <div class="logo">
+                <a href="/indexAfter.html"><span><img src="logo.png" alt="PlantCare AI logo"></span></a>
+                <a href="/indexAfter.html"><span>PlantCare AI</span></a>
+            </div>
+            <nav>
+                <a href="../indexAfter.html">Home</a>
+                <div class="dropdown">
+                    <a href="#" id="scanPlant">Scan Plant <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#" id="thisDevice"><i class="fas fa-camera"></i> This Device</a>
+                        <a href="#"><i class="fab fa-google-drive"></i> GDrive</a>
+                    </div>
+                </div>
+                <a href="indexMyPlants.html" class="active">My Plants</a>
+                <a href="../Community/indexCommunity.html">Community</a>
+                <a href="../Store/indexStore.html">Store</a>
+            </nav>
+            <div class="user-icon">
+                <a class="profile" href="#" onclick="toggleMenu()"><i class="fa-solid fa-user"></i></a>
+            </div>
+            <div class="sub-menu-wrap" id="subMenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img src="profile.png" alt="Profile Picture">
+                        <h2>Arpan&nbsp; Mitra</h2>
+                    </div>
+                    <hr>
+                    <div class="sub-menu-link">
+                        <a href="#"><i class="fa-solid fa-address-card" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;My Profile <span>></span></a>
+                        <a href="#"><i class="fa-solid fa-gear" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Settings <span>></span></a>
+                        <a href="#"><i class="fa-solid fa-screwdriver-wrench" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Help <span>></span></a>
+                        <a href="#"><i class="fa-solid fa-arrow-right-from-bracket" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Logout <span>></span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="center margin">
+            <h1 class="heading">Why Choose PlantCare AI?</h1>
+        </div>
+        <div class="grid three margin">
+            <div class="card-upper">
+                <i class="fi fi-bs-qr-scan"></i>
+                <h2 class="card-title">Instant Detection</h2>
+                <p class="text">Get accurate plant disease <br> diagnosis in seconds using our <br> advanced AI technology</p>
+            </div>
+            <div class="card-upper">
+                <i class="fi fi-rr-lightbulb-on"></i>
+                <h2 class="card-title">Expert Care Tips</h2>
+                <p class="text">Receive personalized plant care <br> recommendations from <br> horticultural experts</p>
+            </div>
+            <div class="card-upper">
+                <i class="fi fi-rr-heart-partner-handshake"></i>
+                <h2 class="card-title">Community Support</h2>
+                <p class="text">Join our growing community of plant <br> enthusiasts and share your <br> gardening journey</p>
+            </div>
+        </div>
+        <div class="light-green">
+            <div class="center margin">
+                <h2 class="heading">Recent Diagnoses</h2>
+            </div>
+            <div class="grid four">
+                <div class="card hidden">
+                    <img src="coffee.jpg" alt="Coffee Plant" class="full img">
+                    <div class="padding">
+                        <h3 class="card-title">Coffee Plant</h3>
+                        <p class="text">Rust</p>
+                        <p class="light text-sm">2 hours ago &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 98%</p>
+                        <!-- <p class="green bold"></p> -->
+                    </div>
+                </div>
+                <div class="card hidden">
+                    <img src="tomato.jpg" alt="Tomato Plant" class="full img">
+                    <div class="padding">
+                        <h3 class="card-title">Tomato Plant</h3>
+                        <p class="text">Septoria</p>
+                        <p class="light text-sm">3.5 hours ago &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 92%</p>
+                        <!-- <p class="green bold">92%</p> -->
+                    </div>
+                </div>
+                <div class="card hidden">
+                    <img src="apple.jpg" alt="Apple Plant" class="full img">
+                    <div class="padding">
+                        <h3 class="card-title">Apple Plant</h3>
+                        <p class="text">Fire Blight</p>
+                        <p class="light text-sm">2 days ago &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 99.9%</p>
+                        <!-- <p class="green bold">99.9%</p> -->
+                    </div>
+                </div>
+                <div class="card hidden">
+                    <img src="orange.jpg" alt="Orange Plant" class="full img">
+                    <div class="padding">
+                        <h3 class="card-title">Orange Plant</h3>
+                        <p class="text">Citrus canker</p>
+                        <p class="light text-sm">5.2 hours ago &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 97%</p>
+                        <!-- <p class="green bold">97%</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Upload Plant Image</h2>
+            <div id="drop-area">
+                <p>Drag & Drop your image here</p>
+                <p>or</p>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+        </div>
+    </div>
+
+    <script src="script2.js"></script>
+</body>
+</html>

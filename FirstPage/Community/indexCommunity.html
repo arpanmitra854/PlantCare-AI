@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community | PlantCare AI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="styleCommunity.css">
+</head>
+<body>
+    <header>
+        <div class="container-H">
+            <div class="logo">
+                <a href="/indexAfter.html"><span><img src="logo.png" alt="PlantCare AI logo"></span></a>
+                <a href="/indexAfter.html"><span>PlantCare AI</span></a>
+            </div>
+            <nav>
+                <a href="../indexAfter.html">Home</a>
+                <div class="dropdown">
+                    <a href="#" id="scanPlant">Scan Plant <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#" id="thisDevice"><i class="fas fa-camera"></i> This Device</a>
+                        <a href="#"><i class="fab fa-google-drive"></i> GDrive</a>
+                    </div>
+                </div>
+                <a href="../MyPlants/indexMyPlants.html">My Plants</a>
+                <a href="indexCommunity.html" class="active">Community</a>
+                <a href="../Store/indexStore.html">Store</a>
+            </nav>
+            <div class="user-icon">
+                <a class="profile" href="#" onclick="toggleMenu()"><i class="fa-solid fa-user"></i></a>
+            </div>
+            <div class="sub-menu-wrap" id="subMenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img src="profile.png" alt="Profile Picture">
+                        <h2>Arpan&nbsp; Mitra</h2>
+                    </div>
+                    <hr>
+                    <div class="sub-menu-link">
+                        <a href="#"><i class="fa-solid fa-address-card" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;My Profile <span>></span></a>
+                        <a href="#"><i class="fa-solid fa-gear" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Settings <span>></span></a>
+                        <a href="#"><i class="fa-solid fa-screwdriver-wrench" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Help <span>></span></a>
+                        <a href="#"><i class="fa-solid fa-arrow-right-from-bracket" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Logout <span>></span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <h1>From Our Community</h1>
+        <div class="grid">
+            <div class="card">
+                <img src="apple.jpg" alt="An apple tree with ripe apples">
+                <div class="content">
+                    <div class="profile">
+                        <img src="https://storage.googleapis.com/a1aa/image/MNP5dYmTYxW8HKcmYBdMbwykoA4aeoS2N63PP80PttI.jpg" alt="Profile picture of Sarah Parkar">
+                        <span>Sarah Parkar</span>
+                    </div>
+                    <p>An apple keeps a doctor away!</p>
+                    <div class="stats">
+                        <i class="fi fi-rs-heart"></i> 234 &nbsp; &nbsp; &nbsp;
+                        <i class="fi fi-rr-comment-alt"></i> 45
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="carrot.jpg" alt="A variety of organic vegetables">
+                <div class="content">
+                    <div class="profile">
+                        <img src="https://storage.googleapis.com/a1aa/image/dtTgZ8lKB4uRO_kl1HDQKUnsyfUzX1hGcuQJM9_mVjo.jpg" alt="Profile picture of Emma Wilson">
+                        <span>Emma Wilson</span>
+                    </div>
+                    <p>Organic Veggies</p>
+                    <div class="stats">
+                        <i class="fi fi-rs-heart"></i> 55K &nbsp; &nbsp; &nbsp;
+                        <i class="fi fi-rr-comment-alt"></i> 450
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="Kumra.jpg" alt="Colorful squash in a basket">
+                <div class="content">
+                    <div class="profile">
+                        <img src="https://storage.googleapis.com/a1aa/image/KgUK2A8Wml1sqGb45KizP-cYc4gbBK2q7jXf5eeODmw.jpg" alt="Profile picture of Mary Williams">
+                        <span>Mary Williams</span>
+                    </div>
+                    <p>Yummy Colorful Squash</p>
+                    <div class="stats">
+                        <i class="fi fi-rs-heart"></i> 2.1K &nbsp; &nbsp; &nbsp;
+                        <i class="fi fi-rr-comment-alt"></i> 850
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Upload Plant Image</h2>
+            <div id="drop-area">
+                <p>Drag & Drop your image here</p>
+                <p>or</p>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="box">
+                <h2 class="start"><img class="logo-footer start" src="logo.png" alt="logo"> &nbsp;  PlantCare AI</h2>
+                <p>Empowering plant lovers with <br> AI-powered disease detection <br> and expert care advice.</p>
+            </div>
+            <div class="box">
+                <h2>Quick Links</h2>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="box">
+                <h2>Support</h2>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Community</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="box">
+                <h2>Newsletter</h2>
+                <p>Stay updated with plant care tips and features.</p>
+                <div class="newsletter">
+                    <input type="email" placeholder="Enter your email">
+                    <button>Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <hr class="footer-line">
+        <div class="bottom">
+            <p>© 2025 PlantCare AI. All rights reserved.</p>
+            <div class="social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script3.js"></script>
+</body>
+</html>

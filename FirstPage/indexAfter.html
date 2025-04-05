@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | PlantCare AI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-straight/css/uicons-bold-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-chubby/css/uicons-solid-chubby.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-chubby/css/uicons-solid-chubby.css'>
+    <link rel="icon" type="image/png" href="logo.png">
+    <!-- <script type="module" src="database.js" defer></script> -->
+    <link rel="stylesheet" href="indexAfter.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="logo">
+            <a href="indexAfter.html"><img src="logo.png" alt="PlantCare AI logo"></a>
+            <a href="indexAfter.html"><span>PlantCare AI</span></a>
+        </div>
+        <nav>
+            <a href="indexAfter.html" class="active">Home</a>
+            <div class="dropdown">
+                <a href="#" id="scanPlant">Scan Plant <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="#" id="thisDevice"><i class="fas fa-camera"></i> This Device</a>
+                    <a href="#"><i class="fab fa-google-drive"></i> GDrive</a>
+                </div>
+            </div>
+            <a href="MyPlants/indexMyPlants.html">My Plants</a>
+            <a href="Community/indexCommunity.html">Community</a>
+            <a href="Store/indexStore.html">Store</a>
+        </nav>
+        <div class="user-icon">
+            <a class="profile" href="#" onclick="toggleMenu()"><i class="fa-solid fa-user"></i></a>
+        </div>
+        <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+                <div class="user-info">
+                    <img src="profile.png" alt="Profile Picture">
+                    <h2>Arpan&nbsp; Mitra</h2>
+                </div>
+                <hr>
+                <div class="sub-menu-link">
+                    <a href="#"><i class="fa-solid fa-address-card" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;My Profile <span>></span></a>
+                    <a href="#"><i class="fa-solid fa-gear" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Settings <span>></span></a>
+                    <a href="#"><i class="fa-solid fa-screwdriver-wrench" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Help <span>></span></a>
+                    <a href="#"><i class="fa-solid fa-arrow-right-from-bracket" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Logout <span>></span></a>
+                </div>
+            </div>    
+        </div>
+    </div>
+</header>
+
+<main>
+    <img src="bgimg.jpg" alt="Various plants in pots">
+    <div class="overlay">
+        <h1>Detect Plant Diseases Instantly With AI</h1>
+        <p id="para1">Upload a photo of your plant and get instant diagnosis</p>
+        <p id="para2">with expert-verified results</p>
+        <a id="scan" href="#">Start Scanning&nbsp; &nbsp; &nbsp;<i class="fi fi-bs-qr-scan"></i></a>
+        <div class="info">
+            <span>10,000+ Plants Diagnosed</span> • <span>98% Accuracy</span> • <span>Expert Verified</span>
+        </div>
+    </div>
+</main>
+
+<!-- //* Modal for Uploading Image */ -->
+<div id="uploadModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Upload Plant Image</h2>
+        <div id="drop-area">
+            <p>Drag & Drop your image here</p>
+            <p>or</p>
+            <input type="file" id="fileInput" accept="image/*">
+            <button id="predictBtn" class="predict-btn">Predict</button>
+        </div>
+    </div>
+</div>
+
+<!-- signup message -->
+<div class="modal-overlay" style="display: none;"></div>
+<div class="signup-container" id="signupContainer">
+    <div class="form-section">
+        <div class="header">
+            <h2 class="welcome-text">Enter Your Name</h2>
+        </div>
+        <form id="nameForm" class="signup-form">
+            <div class="form-group">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
+</div>
+
+<h1 class="welcome-message" id="welcomeMessage" style="display: none;"></h1>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="indexAfter.js"></script>
+</body>
+</html>
