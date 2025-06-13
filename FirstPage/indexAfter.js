@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const publicBaseURL = 'https://verified-liberia-portal-balloon.trycloudflare.com';
+    const publicBaseURL = '';
 
     const scanButton = document.getElementById("scan");
     const uploadModal = document.getElementById("uploadModal");
