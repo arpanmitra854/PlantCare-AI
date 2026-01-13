@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const publicBaseURL = '';
+    const publicBaseURL = 'https://disease-api-248925561173.asia-south1.run.app';
 
     const scanButton = document.getElementById("scan");
     const uploadModal = document.getElementById("uploadModal");
