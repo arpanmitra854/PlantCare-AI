@@ -10,13 +10,39 @@
   <link rel="stylesheet" href="result.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Prediction Result</h2>
-    <img src="plant.jpg" alt="Uploaded Plant" class="result-img" id="plantImage">
-    <p class="prediction" id="diseaseResult">Disease: <strong>Loading...</strong></p>
-    <p class="confidence" id="confidenceScore">Confidence: <strong>Loading...</strong></p>
-    <button class="btn" onclick="goBack()"><i class="fi fi-rs-rotate-reverse"></i>&nbsp; Try Another</button>
-  </div>
+  <main class="result-layout">
+    <section class="result-card">
+      <div class="result-copy">
+        <span class="eyebrow">Scan complete</span>
+        <h2 id="resultHeading">Prediction Result</h2>
+        <p class="result-summary" id="resultSummary">Your plant scan is ready.</p>
+        <div class="result-meta">
+          <div>
+            <span class="meta-label">Disease</span>
+            <p class="prediction" id="diseaseResult">Disease: <strong>Loading...</strong></p>
+          </div>
+          <div>
+            <span class="meta-label">Confidence</span>
+            <p class="confidence" id="confidenceScore">Confidence: <strong>Loading...</strong></p>
+          </div>
+        </div>
+        <div class="confidence-track" aria-hidden="true">
+          <span class="confidence-fill" id="confidenceFill"></span>
+        </div>
+        <ul class="care-list">
+          <li><strong>Isolate:</strong> keep the plant away from healthy leaves while you inspect it.</li>
+          <li><strong>Clean:</strong> remove heavily damaged foliage and sanitize tools after use.</li>
+          <li><strong>Monitor:</strong> re-scan after treatment to track progress and compare changes.</li>
+        </ul>
+        <div class="result-actions">
+          <button class="btn" onclick="goBack()"><i class="fi fi-rs-rotate-reverse"></i>&nbsp; Try Another</button>
+        </div>
+      </div>
+      <div class="result-visual">
+        <img src="plant.jpg" alt="Uploaded Plant" class="result-img" id="plantImage">
+      </div>
+    </section>
+  </main>
   <script>
     window.onload = () => {
     const rawData = sessionStorage.getItem("plantPrediction");
@@ -31,10 +57,14 @@
         const disease = result.Class || "Unknown Disease";
         const confidence = result.Confidence ? (result.Confidence * 100).toFixed(2) : "N/A";
         const imageUrl = result.image_url;
+      const confidenceValue = result.Confidence ? Math.max(0, Math.min(100, result.Confidence * 100)) : 0;
 
         document.getElementById("diseaseResult").innerHTML = `Disease: <strong>${disease}</strong>`;
         document.getElementById("confidenceScore").innerHTML = `Confidence: <strong>${confidence}%</strong>`;
-        if (imageUrl) document.getElementById("plantImage").src = imageUrl;
+      document.getElementById("resultHeading").textContent = disease;
+      document.getElementById("resultSummary").textContent = confidence === "N/A" ? "The model returned a result, but no confidence score was available." : "The scan returned a clear match and a confidence score.";
+      document.getElementById("confidenceFill").style.width = `${confidenceValue}%`;
+      if (imageUrl) document.getElementById("plantImage").src = imageUrl;
 
     } catch (err) {
         console.error("Failed to parse result:", err);

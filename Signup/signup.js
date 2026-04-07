@@ -1,6 +1,5 @@
-// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -12,89 +11,56 @@ const firebaseConfig = {
     appId: "1:92279544525:web:036d6d21d597eff99be784"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Toggle sign-up forms
-const emailSignupBtn = document.getElementById("email-signup-btn");
-const phoneSignupBtn = document.getElementById("phone-signup-btn");
-const emailSignupForm = document.getElementById("email-signup-form");
-const phoneSignupForm = document.getElementById("phone-signup-form");
-
-emailSignupBtn.addEventListener("click", () => {
-    emailSignupForm.classList.remove("hidden");
-    phoneSignupForm.classList.add("hidden");
-});
-
-phoneSignupBtn.addEventListener("click", () => {
-    phoneSignupForm.classList.remove("hidden");
-    emailSignupForm.classList.add("hidden");
-});
-
-// Email sign-up
+const signupForm = document.getElementById("signup-form");
 const signupButton = document.getElementById("signup-button");
-const sendOtpButton = document.getElementById("send-otp-button");
-const verifyOtpButton = document.getElementById("verify-otp-button");
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-        if (document.activeElement.id === "email" || document.activeElement.id === "password") {
-            signupButton.click();
-        } else if (document.activeElement.id === "phone") {
-            sendOtpButton.click();
-        } else if (document.activeElement.id === "otp") {
-            verifyOtpButton.click();
-        }
+const signupStatus = document.getElementById("signup-status");
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const phoneInput = document.getElementById("phone");
+const passwordInput = document.getElementById("password");
+const genderInput = document.getElementById("gender");
+const deviceIdInput = document.getElementById("deviceId");
+
+function storeProfileData() {
+    const profileData = {
+        userName: nameInput.value.trim(),
+        userEmail: emailInput.value.trim(),
+        userPhone: phoneInput.value.trim(),
+        userGender: genderInput.value,
+        deviceId: deviceIdInput.value.trim()
+    };
+
+    localStorage.setItem("pendingProfileData", JSON.stringify(profileData));
+    localStorage.setItem("userEmail", profileData.userEmail);
+    localStorage.setItem("profileCreated", "false");
+}
+
+signupForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+    const name = nameInput.value.trim();
+
+    if (!name || !email || !password || !phoneInput.value.trim() || !genderInput.value || !deviceIdInput.value.trim()) {
+        signupStatus.textContent = "Please complete all required fields.";
+        signupStatus.style.color = "#9f1239";
+        return;
     }
-});
-signupButton.addEventListener("click", () => {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    
+
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-            alert("Account created successfully!");
-            window.location.href = "../indexafter.html";
-        })
-        .catch((error) => {
-            alert(error.message);
-        });
-        document.addEventListener("keypress", (event) => {
-            if (event.key === "Enter") {
-                signupButton.click();
-            }
-        });
-        
-});
-
-// Phone number authentication
-const otpSection = document.getElementById("otp-section");
-let confirmationResult;
-
-sendOtpButton.addEventListener("click", () => {
-    const phoneNumber = document.getElementById("phone").value;
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, "send-otp-button", {
-        'size': 'invisible'
-    });
-    
-    signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
-        .then((result) => {
-            confirmationResult = result;
-            otpSection.classList.remove("hidden");
-        })
-        .catch((error) => {
-            alert(error.message);
-        });
-});
-
-verifyOtpButton.addEventListener("click", () => {
-    const otp = document.getElementById("otp").value;
-    confirmationResult.confirm(otp)
         .then(() => {
-            alert("Phone number verified successfully!");
-            window.location.href = "../indexafter.html";
+            storeProfileData();
+            signupStatus.textContent = "Account created. Continue to login for OTP verification.";
+            signupStatus.style.color = "#1f5e29";
+            setTimeout(() => {
+                window.location.href = "../Login/index4.html";
+            }, 800);
         })
         .catch((error) => {
-            alert("Invalid OTP. Please try again.");
+            signupStatus.textContent = error.message;
+            signupStatus.style.color = "#9f1239";
         });
 });

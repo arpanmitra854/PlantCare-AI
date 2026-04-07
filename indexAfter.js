@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
             sessionStorage.setItem("plantPrediction", JSON.stringify(result));
 
             // Redirect
-            window.location.href = "result.html";
+            window.location.href = "Result.html";
 
         } catch (err) {
             console.error("Prediction failed:", err);
@@ -154,6 +154,14 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateProfileName(name) {
         if (profileName) {
             profileName.textContent = name;
+        }
+        const dashboardName = document.getElementById("heroName");
+        if (dashboardName) {
+            dashboardName.textContent = `Welcome back, ${name}`;
+        }
+        const profileHeadline = document.getElementById("profileName");
+        if (profileHeadline) {
+            profileHeadline.textContent = name;
         }
     }
 
@@ -253,6 +261,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const storedName = localStorage.getItem("userName");
     if (storedName) {
         updateProfileName(storedName);
+    } else {
+        const dashboardName = document.getElementById("heroName");
+        if (dashboardName) {
+            dashboardName.textContent = "Welcome back to PlantCare AI";
+        }
     }
     
     // Then check if user is already signed up

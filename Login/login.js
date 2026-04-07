@@ -1,8 +1,6 @@
-// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
 
-// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDMdl-ElDF6rVFmPDkMW9kd7H4ASaC53p0",
     authDomain: "ai-plant-disease-detector.firebaseapp.com",
@@ -12,104 +10,113 @@ const firebaseConfig = {
     appId: "1:92279544525:web:036d6d21d597eff99be784"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Toggle sign-in forms
-const emailSignInBtn = document.getElementById("email-signup-btn");
-const phoneSignInBtn = document.getElementById("phone-signup-btn");
-const emailSignInForm = document.getElementById("email-signup-form");
-const phoneSignInForm = document.getElementById("phone-signup-form");
-
-emailSignInBtn.addEventListener("click", () => {
-    emailSignInForm.classList.remove("hidden");
-    phoneSignInForm.classList.add("hidden");
-});
-
-phoneSignInBtn.addEventListener("click", () => {
-    phoneSignInForm.classList.remove("hidden");
-    emailSignInForm.classList.add("hidden");
-});
-
-// Email sign-in
-const signinButton = document.getElementById("signup-button");
-const sendOtpButton = document.getElementById("send-otp-button");
+const loginForm = document.getElementById("login-form");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const otpInput = document.getElementById("otp");
+const otpStep = document.getElementById("otp-step");
 const verifyOtpButton = document.getElementById("verify-otp-button");
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-        if (document.activeElement.id === "email" || document.activeElement.id === "password") {
-            signinButton.click();
-        } else if (document.activeElement.id === "phone") {
-            sendOtpButton.click();
-        } else if (document.activeElement.id === "otp") {
-            verifyOtpButton.click();
-        }
+const resendOtpButton = document.getElementById("resend-otp-button");
+const forgotPasswordLink = document.getElementById("forgot-password");
+const statusText = document.getElementById("login-status");
+
+let generatedOtp = "";
+let loginCandidateEmail = "";
+let loginAuthorized = false;
+
+function createOtp() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+function updateStatus(message, isError = false) {
+    statusText.textContent = message;
+    statusText.style.color = isError ? "#9f1239" : "#2f5b46";
+}
+
+function finalizeProfileCreation() {
+    const pendingProfile = localStorage.getItem("pendingProfileData");
+    if (pendingProfile) {
+        localStorage.setItem("userProfileData", pendingProfile);
+        localStorage.removeItem("pendingProfileData");
     }
-});
-signinButton.addEventListener("click", () => {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            alert("Signed in successfully!");
-            window.location.href = "../indexafter.html"; // Redirect to another page after login
-        })
-        .catch((error) => {
-            alert(error.message);
-        });
-});
+    localStorage.setItem("profileCreated", "true");
+    localStorage.setItem("userSignedUp", "true");
+    localStorage.setItem("hasSignedUp", "true");
+}
 
-// Phone number authentication
-const otpSection = document.getElementById("otp-section");
-let confirmationResult;
+function startOtpFlow(email) {
+    loginCandidateEmail = email;
+    generatedOtp = createOtp();
+    otpStep.classList.remove("hidden");
+    updateStatus(`OTP sent. Use ${generatedOtp} to verify authorization.`);
+}
 
-sendOtpButton.addEventListener("click", () => {
-    const phoneNumber = document.getElementById("phone").value;
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, "send-otp-button", {
-        'size': 'invisible'
-    });
-    
-    signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
-        .then((result) => {
-            confirmationResult = result;
-            otpSection.classList.remove("hidden");
-        })
-        .catch((error) => {
-            alert(error.message);
-        });
+loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    if (!email || !password) {
+        updateStatus("Email and password are required.", true);
+        return;
+    }
+
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        startOtpFlow(email);
+    } catch (error) {
+        updateStatus(error.message, true);
+    }
 });
 
 verifyOtpButton.addEventListener("click", () => {
-    const otp = document.getElementById("otp").value;
-    confirmationResult.confirm(otp)
-        .then(() => {
-            alert("Phone number verified and signed in successfully!");
-            window.location.href = "../indexafter.html"; // Redirect after successful login
-        })
-        .catch((error) => {
-            alert("Invalid OTP. Please try again.");
-        });
+    const otp = otpInput.value.trim();
+    if (!generatedOtp) {
+        updateStatus("Please login first to receive an OTP.", true);
+        return;
+    }
+    if (otp !== generatedOtp) {
+        updateStatus("Invalid OTP. Please try again.", true);
+        return;
+    }
+
+    loginAuthorized = true;
+    finalizeProfileCreation();
+    localStorage.setItem("authorizedEmail", loginCandidateEmail);
+    updateStatus("OTP verified. Profile created and authorized successfully.");
+
+    setTimeout(() => {
+        if (loginAuthorized) {
+            window.location.href = "../indexAfter.html";
+        }
+    }, 700);
 });
 
-// Forgot password functionality
-const forgotPasswordLink = document.getElementById("forgot-password");
+resendOtpButton.addEventListener("click", () => {
+    if (!loginCandidateEmail) {
+        updateStatus("Login with email and password first.", true);
+        return;
+    }
+    generatedOtp = createOtp();
+    updateStatus(`A new OTP has been sent. Use ${generatedOtp} to continue.`);
+});
 
-forgotPasswordLink.addEventListener("click", (event) => {
-    event.preventDefault(); // Prevent the default action of the link
-    
-    const email = document.getElementById("email").value;
-    
-    if (email) {
-        sendPasswordResetEmail(auth, email)
-            .then(() => {
-                alert("Password reset email sent successfully!");
-            })
-            .catch((error) => {
-                alert(error.message);
-            });
-    } else {
-        alert("Please enter your email to reset your password.");
+forgotPasswordLink.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const email = emailInput.value.trim();
+
+    if (!email) {
+        updateStatus("Enter your email first, then click forgot password.", true);
+        return;
+    }
+
+    try {
+        await sendPasswordResetEmail(auth, email);
+        updateStatus("Password reset email sent successfully.");
+    } catch (error) {
+        updateStatus(error.message, true);
     }
 });

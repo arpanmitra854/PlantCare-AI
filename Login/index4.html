@@ -5,63 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | PlantCare AI</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&family=Poppins:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&family=Poppins:wght@400;600;700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="style4.css">
     <script type="module" src="login.js" defer></script>
 </head>
-<body>
-    <div class="signup-container">
-        <div class="form-section">
+<body class="auth-page">
+    <main class="auth-shell">
+        <section class="auth-hero auth-hero--login" aria-label="Login visual panel">
+            <img class="auth-hero-img" src="LOGIN1.jpg" alt="Plant leaves background">
+            <div class="hero-overlay-copy">
+                <h2>Smart Plant Monitoring</h2>
+                <p>Track plant health and detect disease faster with AI-powered insights.</p>
+            </div>
+        </section>
+
+        <section class="auth-card">
             <div class="header">
-                <div class="signup-logo">
-                    <img src="logo.png" alt="PlantCare AI logo">
-                    <span>PlantCare AI</span>
-                </div>
-                <div class="welcome-text">Welcome Back!</div>
+                <h1 class="page-title">Login</h1>
             </div>
-            
-            <div class="signup-options">
-                <button id="email-signup-btn" class="toggle-btn">Login with Email</button>
-                <button id="phone-signup-btn" class="toggle-btn">Login with Phone</button>
-            </div>
-            
-            <form id="email-signup-form" class="signup-form hidden">
+
+            <form id="login-form" class="auth-form">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter your email">
+                    <input type="email" id="email" placeholder="Enter your email" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password">
+                    <input type="password" id="password" placeholder="Enter your password" required>
                 </div>
-                <a href="#" id="forgot-password" class="forgot-password-link">Forgot Password?</a>
-                <button type="button" id="signup-button" class="btn">Sign In</button>
+                <a href="#" id="forgot-password" class="forgot-link">Forgot password?</a>
+                <button type="submit" id="login-button" class="btn-primary">Sign In</button>
             </form>
-            
-            <form id="phone-signup-form" class="signup-form hidden">
+
+            <section id="otp-step" class="otp-panel hidden">
+                <h2>OTP Verification</h2>
+                <p>Enter the 6-digit code to authorize your account.</p>
                 <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" placeholder="Enter your phone number">
+                    <label for="otp">OTP Code</label>
+                    <input type="text" id="otp" placeholder="Enter 6-digit OTP" maxlength="6">
                 </div>
-                <button type="button" id="send-otp-button" class="btn">Send OTP</button>
-                <div id="otp-section" class="hidden">
-                    <div class="form-group">
-                        <label for="otp">Enter OTP</label>
-                        <input type="text" id="otp" placeholder="Enter OTP">
-                    </div>
-                    <button type="button" id="verify-otp-button" class="btn">Verify OTP</button>
+                <div class="otp-actions">
+                    <button type="button" id="verify-otp-button" class="btn-primary">Verify OTP</button>
+                    <button type="button" id="resend-otp-button" class="btn-secondary">Resend OTP</button>
                 </div>
-            </form>
-            
-            <div class="continue-with">Or continue with</div>
-            <div class="social-buttons">
-                <button><i class="fab fa-google"></i></button>
-                <button><i class="fab fa-apple"></i></button>
-                <button><i class="fab fa-facebook-f"></i></button>
-            </div>
-            <div class="footer-text">Don't have an account? <a href="../Signup/index5.html" class="signup-link">&nbsp;Sign Up</a></div>
-        </div>
-    </div>
+            </section>
+
+            <p class="auth-status" id="login-status">Use your registered email and password to continue.</p>
+            <div class="auth-footer">Don't have an account? <a href="../Signup/index5.html">Create an account</a></div>
+        </section>
+    </main>
 </body>
 </html>

@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const scanPlantDropdown = document.getElementById("scanPlant"); // "Scan Plant" dropdown trigger
     const dropdownMenu = document.querySelector(".dropdown-menu"); // Dropdown menu
     const thisDeviceOption = document.getElementById("thisDevice"); // "This Device" in dropdown
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenuClose = document.querySelector('.mobile-menu-close');
+    const mobileNav = document.querySelector('.mobile-nav');
 
     // Function to show Drag & Drop modal
     function showUploadModal(event) {
@@ -43,8 +46,15 @@ document.addEventListener("DOMContentLoaded", function () {
             dropdownMenu.style.display = "none";
         }
     });
-});
 
+    // Also close mobile nav if a link is clicked
+    const mobileNavLinks = mobileNav.querySelectorAll('a');
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileNav.classList.remove('is-open');
+        });
+    });
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     const navLinks = document.querySelectorAll("nav a"); // Select all navbar links
@@ -56,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const targetURL = link.getAttribute("href"); // Get the clicked link URL
             
             // Check if the user is signed up (Modify based on your authentication system)
-            const isSignedUp = localStorage.getItem("userSignedUp");
+            const isSignedUp = localStorage.getItem("userSignedUp") === "true" || localStorage.getItem("hasSignedUp") === "true";
 
             if (!isSignedUp) {
                 // Save the intended page in session storage
