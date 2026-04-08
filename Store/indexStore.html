@@ -39,7 +39,7 @@
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
-                        <img src="profile.png" alt="Profile Picture">
+                        <img src="/profile.png" alt="Profile Picture">
                         <h2>Arpan&nbsp; Mitra</h2>
                     </div>
                     <hr>
@@ -63,9 +63,83 @@
             </div>
         </div>
     </div>
-    <div class="coming-soon-container">
-        <h1>Coming Soon!</h1>
+
+    <main class="store-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Welcome to PlantCare Store</h1>
+                <p>Everything you need to nurture your green friends</p>
+            </div>
+        </section>
+
+        <!-- Store Content -->
+        <section class="store-content">
+            <!-- Search and Filter Bar -->
+            <div class="search-filter-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search for products...">
+                </div>
+                <div class="cart-icon-container">
+                    <button class="cart-btn" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="categories-container">
+                <div class="categories" id="categories">
+                    <!-- Categories will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-section">
+                <h2 class="section-title" id="sectionTitle">All Products</h2>
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content product-modal">
+            <span class="close-modal">&times;</span>
+            <div class="product-detail" id="productDetail">
+                <!-- Product details will be populated by JavaScript -->
+            </div>
+        </div>
     </div>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Shopping Cart</h2>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total: $<span id="cartTotal">0.00</span></span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+        </div>
+    </div>
+
+    <div id="cartOverlay" class="cart-overlay"></div>
+
+    <script src="database.js"></script>
     <script src="script6.js"></script>
+    <script src="store.js"></script>
 </body>
 </html>
