@@ -4,142 +4,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Store | PlantCare AI</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" type="image/png" href="../logo.png">
+    <!-- Single FA6 (removed duplicate FA5) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-straight/css/uicons-bold-straight.css'>
     <link rel="stylesheet" href="styleStore.css">
 </head>
 <body>
-    <header>
-        <div class="container-H">
-            <div class="logo">
-                <a href="/indexAfter.html"><span><img src="logo.png" alt="PlantCare AI logo"></span></a>
-                <a href="/indexAfter.html"><span>PlantCare AI</span></a>
-            </div>
-            <nav>
-                <a href="../indexAfter.html">Home</a>
-                <div class="dropdown">
-                    <a href="#" id="scanPlant">Scan Plant <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-menu">
-                        <a href="#" id="thisDevice"><i class="fas fa-camera"></i> This Device</a>
-                        <a href="#"><i class="fab fa-google-drive"></i> GDrive</a>
-                    </div>
-                </div>
-                <a href="../MyPlants/indexMyPlants.html">My Plants</a>
-                <a href="../Community/indexCommunity.html" >Community</a>
-                <a href="indexStore.html" class="active">Store</a>
-            </nav>
-            <div class="user-icon">
-                <a class="profile" href="#" onclick="toggleMenu()"><i class="fa-solid fa-user"></i></a>
-            </div>
-            <div class="sub-menu-wrap" id="subMenu">
-                <div class="sub-menu">
-                    <div class="user-info">
-                        <img src="/profile.png" alt="Profile Picture">
-                        <h2>Arpan&nbsp; Mitra</h2>
-                    </div>
-                    <hr>
-                    <div class="sub-menu-link">
-                        <a href="#"><i class="fa-solid fa-address-card" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;My Profile <span>></span></a>
-                        <a href="#"><i class="fa-solid fa-gear" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Settings <span>></span></a>
-                        <a href="#"><i class="fa-solid fa-screwdriver-wrench" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Help <span>></span></a>
-                        <a href="#"><i class="fa-solid fa-arrow-right-from-bracket" class="same"></i>&nbsp;&nbsp;&nbsp;&nbsp;Logout <span>></span></a>
-                </div>
-            </div>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header>
+    <div class="container-H">
+        <div class="logo">
+            <a href="../indexAfter.html"><span><img src="../logo.png" alt="PlantCare AI logo"></span></a>
+            <a href="../indexAfter.html"><span>PlantCare AI</span></a>
         </div>
-    </header>
-    <div id="uploadModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Upload Plant Image</h2>
-            <div id="drop-area">
-                <p>Drag & Drop your image here</p>
-                <p>or</p>
-                <input type="file" id="fileInput" accept="image/*">
+
+        <nav>
+            <a href="../indexAfter.html">Home</a>
+            <div class="dropdown">
+                <a href="#" id="scanPlant">Scan Plant <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="#" id="thisDevice"><i class="fas fa-camera"></i> This Device</a>
+                    <a href="#"><i class="fab fa-google-drive"></i> GDrive</a>
+                </div>
             </div>
+            <a href="../MyPlants/indexMyPlants.html">My Plants</a>
+            <a href="../Community/indexCommunity.html">Community</a>
+            <a href="indexStore.html" class="active">Store</a>
+        </nav>
+
+        <!-- Profile icon -->
+        <div class="user-icon">
+            <a class="profile" href="#" onclick="toggleMenu()">
+                <i class="fa-solid fa-user"></i>
+            </a>
         </div>
-    </div>
 
-    <main class="store-container">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1>Welcome to PlantCare Store</h1>
-                <p>Everything you need to nurture your green friends</p>
-            </div>
-        </section>
-
-        <!-- Store Content -->
-        <section class="store-content">
-            <!-- Search and Filter Bar -->
-            <div class="search-filter-bar">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Search for products...">
+        <!-- Profile sub-menu -->
+        <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+                <div class="user-info">
+                    <img src="../profile.png" alt="Profile picture">
+                    <h2>Arpan&nbsp;Mitra</h2>
                 </div>
-                <div class="cart-icon-container">
-                    <button class="cart-btn" id="cartBtn">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </button>
+                <hr>
+                <div class="sub-menu-link">
+                    <a href="#">
+                        <span class="sub-menu-link-inner">
+                            <i class="fa-solid fa-address-card same"></i> My Profile
+                        </span>
+                        <span>›</span>
+                    </a>
+                    <a href="#">
+                        <span class="sub-menu-link-inner">
+                            <i class="fa-solid fa-gear same"></i> Settings
+                        </span>
+                        <span>›</span>
+                    </a>
+                    <a href="#">
+                        <span class="sub-menu-link-inner">
+                            <i class="fa-solid fa-screwdriver-wrench same"></i> Help
+                        </span>
+                        <span>›</span>
+                    </a>
+                    <a href="#">
+                        <span class="sub-menu-link-inner">
+                            <i class="fa-solid fa-arrow-right-from-bracket same"></i> Logout
+                        </span>
+                        <span>›</span>
+                    </a>
                 </div>
-            </div>
-
-            <!-- Categories -->
-            <div class="categories-container">
-                <div class="categories" id="categories">
-                    <!-- Categories will be populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Products Grid -->
-            <div class="products-section">
-                <h2 class="section-title" id="sectionTitle">All Products</h2>
-                <div class="products-grid" id="productsGrid">
-                    <!-- Products will be populated by JavaScript -->
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Product Detail Modal -->
-    <div id="productModal" class="modal">
-        <div class="modal-content product-modal">
-            <span class="close-modal">&times;</span>
-            <div class="product-detail" id="productDetail">
-                <!-- Product details will be populated by JavaScript -->
             </div>
         </div>
     </div>
+</header>
 
-    <!-- Shopping Cart Sidebar -->
-    <div id="cartSidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h2>Shopping Cart</h2>
-            <button class="close-cart" id="closeCart">&times;</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <div class="empty-cart">
-                <i class="fas fa-shopping-cart"></i>
-                <p>Your cart is empty</p>
-            </div>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total: $<span id="cartTotal">0.00</span></span>
-            </div>
-            <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+<!-- ============================================================
+     UPLOAD MODAL
+     ============================================================ -->
+<div id="uploadModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Upload Plant Image</h2>
+        <div id="drop-area">
+            <p>Drag &amp; Drop your image here</p>
+            <p>or</p>
+            <input type="file" id="fileInput" accept="image/*">
         </div>
     </div>
+</div>
 
-    <div id="cartOverlay" class="cart-overlay"></div>
+<!-- ============================================================
+     STORE MAIN
+     ============================================================ -->
+<main class="store-container">
 
-    <script src="database.js"></script>
-    <script src="script6.js"></script>
-    <script src="store.js"></script>
+    <!-- Hero -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Welcome to PlantCare Store</h1>
+            <p>Everything you need to nurture your green friends</p>
+        </div>
+    </section>
+
+    <!-- Store content -->
+    <section class="store-content">
+
+        <!-- Search + cart button -->
+        <div class="search-filter-bar">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search for products…">
+            </div>
+            <div class="cart-icon-container">
+                <button class="cart-btn" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    Cart
+                    <span class="cart-count" id="cartCount" style="display:none;">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories-container">
+            <div class="categories" id="categories">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Products grid -->
+        <div class="products-section">
+            <h2 class="section-title" id="sectionTitle">All Products</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<!-- ============================================================
+     PRODUCT DETAIL MODAL
+     ============================================================ -->
+<div id="productModal" class="modal">
+    <div class="modal-content product-modal">
+        <span class="close-modal">&times;</span>
+        <div class="product-detail" id="productDetail">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     CART SIDEBAR
+     ============================================================ -->
+<div id="cartSidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h2>Shopping Cart</h2>
+        <button class="close-cart" id="closeCart">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+        <div class="empty-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <p>Your cart is empty</p>
+        </div>
+    </div>
+    <div class="cart-footer">
+        <div class="cart-total">
+            Total: $<span id="cartTotal">0.00</span>
+        </div>
+        <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+    </div>
+</div>
+
+<div id="cartOverlay" class="cart-overlay"></div>
+
+<!-- Scripts — unchanged -->
+<script src="script6.js"></script>
+<script src="store.js"></script>
 </body>
 </html>

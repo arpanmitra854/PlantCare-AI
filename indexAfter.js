@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const publicBaseURL = 'https://disease-api-248925561173.asia-south1.run.app';
+
+    const publicBaseURL = 'http://13.204.69.157:8000';
 
     const scanButton = document.getElementById("scan");
     const uploadModal = document.getElementById("uploadModal");
@@ -10,83 +11,108 @@ document.addEventListener("DOMContentLoaded", function () {
     const predictBtn = document.getElementById("predictBtn");
     const fileInput = document.getElementById("fileInput");
 
-    // Show Modal
+    // ---------------- DROPDOWN ----------------
+    if (scanButton) {
+        scanButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            dropdownMenu.style.display = "block";
+        });
+    }
+
+    if (scanPlantDropdown) {
+        scanPlantDropdown.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            dropdownMenu.style.display =
+                dropdownMenu.style.display === "block" ? "none" : "block";
+        });
+    }
+
+    document.addEventListener("click", function (event) {
+        if (
+            dropdownMenu &&
+            !dropdownMenu.contains(event.target) &&
+            scanPlantDropdown &&
+            !scanPlantDropdown.contains(event.target)
+        ) {
+            dropdownMenu.style.display = "none";
+        }
+    });
+
+    // ---------------- MODAL ----------------
     function showUploadModal(event) {
         event.preventDefault();
         uploadModal.style.display = "flex";
         dropdownMenu.style.display = "none";
     }
 
-    scanButton.addEventListener("click", showUploadModal);
-    thisDeviceOption.addEventListener("click", showUploadModal);
+    if (thisDeviceOption) {
+        thisDeviceOption.addEventListener("click", showUploadModal);
+    }
 
-    // Close Modal
-    closeModal.addEventListener("click", () => uploadModal.style.display = "none");
+    if (closeModal) {
+        closeModal.addEventListener("click", () => {
+            uploadModal.style.display = "none";
+        });
+    }
+
     window.addEventListener("click", (event) => {
         if (event.target === uploadModal) {
             uploadModal.style.display = "none";
         }
     });
 
-    // Toggle Dropdown
-    scanPlantDropdown.addEventListener("click", function (event) {
-        event.preventDefault();
-        dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+    // ---------------- PREDICTION ----------------
+    if (predictBtn) {
+        predictBtn.addEventListener("click", async () => {
+
+    if (fileInput.files.length === 0) {
+        alert("Please select an image first.");
+        return;
+    }
+
+    const file = fileInput.files[0];
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("device_id", "Plant123"); // ✅ FIX
+
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
     });
 
-    document.addEventListener("click", function (event) {
-        if (!scanPlantDropdown.contains(event.target) && !dropdownMenu.contains(event.target)) {
-            dropdownMenu.style.display = "none";
+    try {
+        const base64Image = await toBase64(file);
+
+    const response = await fetch(`${publicBaseURL}/predict`, {
+    method: 'POST',
+    body: formData
+});
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-    });
 
-    // Predict and Redirect
-    predictBtn.addEventListener("click", async () => {
-        if (fileInput.files.length === 0) {
-            alert("Please select an image first.");
-            return;
-        }
+        const result = await response.json();
 
-        const file = fileInput.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
+        console.log("API RESULT:", result); // 🔥 DEBUG
 
-        const toBase64 = file => new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-        });
+        result.image_url = base64Image;
 
-        try {
-            const base64Image = await toBase64(file);
+        sessionStorage.setItem("plantPrediction", JSON.stringify(result));
 
-            // Get API Key
-            const keyRes = await fetch(`${publicBaseURL}/generate-api-key`, { method: 'POST' });
-            const keyData = await keyRes.json();
-            const apiKey = keyData.api_key;
+        window.location.href = "Result.html";
 
-            // Predict
-            const predictRes = await fetch(`${publicBaseURL}/predict`, {
-                method: 'POST',
-                headers: { 'api-key': apiKey },
-                body: formData
-            });
+    } catch (err) {
+        console.error("Prediction failed:", err);
+        alert("Error: " + err.message);
+    }
+});
+    }
 
-            const result = await predictRes.json();
-            result.image_url = base64Image; // Store base64 image
-
-            // Save to sessionStorage
-            sessionStorage.setItem("plantPrediction", JSON.stringify(result));
-
-            // Redirect
-            window.location.href = "Result.html";
-
-        } catch (err) {
-            console.error("Prediction failed:", err);
-            alert("Something went wrong. Please try again.");
-        }
-    });
 });
 
 

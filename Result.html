@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Result | PlantCare AI</title>
   <link rel="icon" type="image/png" href="logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins&display=swap" rel="stylesheet">
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
   <link rel="stylesheet" href="result.css">
 </head>
+
 <body>
   <main class="result-layout">
     <section class="result-card">
@@ -16,6 +17,7 @@
         <span class="eyebrow">Scan complete</span>
         <h2 id="resultHeading">Prediction Result</h2>
         <p class="result-summary" id="resultSummary">Your plant scan is ready.</p>
+
         <div class="result-meta">
           <div>
             <span class="meta-label">Disease</span>
@@ -26,56 +28,118 @@
             <p class="confidence" id="confidenceScore">Confidence: <strong>Loading...</strong></p>
           </div>
         </div>
-        <div class="confidence-track" aria-hidden="true">
+
+        <div class="confidence-track">
           <span class="confidence-fill" id="confidenceFill"></span>
         </div>
+
         <ul class="care-list">
-          <li><strong>Isolate:</strong> keep the plant away from healthy leaves while you inspect it.</li>
-          <li><strong>Clean:</strong> remove heavily damaged foliage and sanitize tools after use.</li>
-          <li><strong>Monitor:</strong> re-scan after treatment to track progress and compare changes.</li>
+          <li><strong>Isolate:</strong> keep the plant away from healthy leaves.</li>
+          <li><strong>Clean:</strong> remove damaged leaves and sanitize tools.</li>
+          <li><strong>Monitor:</strong> re-scan after treatment.</li>
         </ul>
+
         <div class="result-actions">
-          <button class="btn" onclick="goBack()"><i class="fi fi-rs-rotate-reverse"></i>&nbsp; Try Another</button>
+          <button class="btn" onclick="goBack()">
+            <i class="fi fi-rs-rotate-reverse"></i> Try Another
+          </button>
         </div>
       </div>
+
       <div class="result-visual">
         <img src="plant.jpg" alt="Uploaded Plant" class="result-img" id="plantImage">
       </div>
     </section>
   </main>
+
   <script>
     window.onload = () => {
-    const rawData = sessionStorage.getItem("plantPrediction");
 
-    if (!rawData) {
+      const rawData = sessionStorage.getItem("plantPrediction");
+      console.log("RAW DATA:", rawData);
+
+      if (!rawData) {
         document.getElementById("diseaseResult").innerHTML = "No result data found.";
         return;
-    }
+      }
 
-    try {
-        const result = JSON.parse(rawData);
-        const disease = result.Class || "Unknown Disease";
-        const confidence = result.Confidence ? (result.Confidence * 100).toFixed(2) : "N/A";
-        const imageUrl = result.image_url;
-      const confidenceValue = result.Confidence ? Math.max(0, Math.min(100, result.Confidence * 100)) : 0;
+      let result;
 
-        document.getElementById("diseaseResult").innerHTML = `Disease: <strong>${disease}</strong>`;
-        document.getElementById("confidenceScore").innerHTML = `Confidence: <strong>${confidence}%</strong>`;
+      try {
+        result = JSON.parse(rawData);
+      } catch (err) {
+        console.error("JSON parse failed:", err);
+        document.getElementById("diseaseResult").innerHTML = "Invalid data format.";
+        return;
+      }
+
+      console.log("PARSED RESULT:", result);
+
+      // ✅ DISEASE (flexible handling)
+      const disease =
+        result.Class ||
+        result.class ||
+        result.prediction ||
+        result.label ||
+        "Unknown Disease";
+
+      // ✅ CONFIDENCE FIX (handles "98.02%" + numbers)
+      let confidenceRaw =
+        result.Confidence ??
+        result.confidence ??
+        result.score ??
+        null;
+
+      let confidence = "N/A";
+      let confidenceValue = 0;
+
+      if (confidenceRaw !== null) {
+
+        // Case 1: "98.02%"
+        if (typeof confidenceRaw === "string" && confidenceRaw.includes("%")) {
+          confidence = confidenceRaw.replace("%", "");
+          confidenceValue = parseFloat(confidence);
+        }
+
+        // Case 2: 0.98
+        else if (!isNaN(confidenceRaw)) {
+          confidence = (confidenceRaw * 100).toFixed(2);
+          confidenceValue = confidenceRaw * 100;
+        }
+      }
+
+      // ✅ IMAGE
+      const imageUrl = result.image_url;
+
+      // ✅ UI UPDATE
+      document.getElementById("diseaseResult").innerHTML =
+        `Disease: <strong>${disease}</strong>`;
+
+      document.getElementById("confidenceScore").innerHTML =
+        `Confidence: <strong>${confidence}%</strong>`;
+
       document.getElementById("resultHeading").textContent = disease;
-      document.getElementById("resultSummary").textContent = confidence === "N/A" ? "The model returned a result, but no confidence score was available." : "The scan returned a clear match and a confidence score.";
-      document.getElementById("confidenceFill").style.width = `${confidenceValue}%`;
-      if (imageUrl) document.getElementById("plantImage").src = imageUrl;
 
-    } catch (err) {
-        console.error("Failed to parse result:", err);
-        document.getElementById("diseaseResult").innerHTML = "Error displaying result.";
+      document.getElementById("resultSummary").textContent =
+        confidence === "N/A"
+          ? "The model returned a result, but no confidence score was available."
+          : "The scan returned a clear match and a confidence score.";
+
+      document.getElementById("confidenceFill").style.width =
+        `${confidenceValue}%`;
+
+      // ✅ FIX IMAGE DISPLAY
+      if (imageUrl && imageUrl.startsWith("data:image")) {
+        document.getElementById("plantImage").src = imageUrl;
+      } else {
+        console.warn("Invalid image format");
+      }
+    };
+
+    function goBack() {
+      window.location.href = "indexAfter.html";
     }
-};
-
-function goBack() {
-    window.location.href = "indexAfter.html";
-}
-
   </script>
+
 </body>
 </html>
